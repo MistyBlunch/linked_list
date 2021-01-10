@@ -149,6 +149,17 @@ public:
     return tmp;
   }
 
+  // Método para retornar el indice del valor que le pasamos al método
+  int search(int data) {
+    node* tmp = head_;
+    for(size_t i=0; i<size_; ++i) {
+      if(tmp->value_ == data)
+        return i;
+      tmp = tmp->next_;
+    }
+    return -1;
+  }
+
   size_t size() {
     return size_;
   }
@@ -190,6 +201,8 @@ int main() {
 
   cout << '\n' << ll.size() << '\n';
 
+  cout << endl;
+
   // Get value of the second index
   // It should be 43
   cout << "Get value of the second index:" << endl;
@@ -199,4 +212,10 @@ int main() {
   else
     cout << "not found";
   cout << endl << endl;
+
+  // Find the position of value 15
+  // It must be 3
+  cout << "The position of value 15:" << endl;
+  int srch = ll.search(15);
+  cout << srch << endl << endl;
 }
