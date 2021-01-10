@@ -138,6 +138,51 @@ public:
     size_ += 1;
   }
 
+  void pop_front() {
+    node* curHead = head_;
+    node* newHead = head_->next_;
+
+    head_ = newHead;
+    delete curHead;
+  }
+
+  void pop_back() {
+    node* newTail = head_;
+
+    for(size_t i = 0; i < size_-1; ++i) {
+      newTail = newTail->next_;
+    }
+
+    node* node = newTail->next_;
+    tail_ = newTail;
+    delete node;
+  }
+
+  void erase(int index) {
+    if(size_ == 0) return;
+    if(index < 0 || index > size_) return;
+    if(index == 0) {
+      pop_front();
+      return;
+    }
+    if(index == size_) {
+      pop_back();
+      return;
+    }
+
+    node* prevNode = head_;
+
+    for(size_t i = 0; i < index-1; ++i) {
+      prevNode = prevNode->next_;
+    }
+    node* posNode = prevNode->next_;
+    node* nxtNode = posNode->next_;
+
+    prevNode->next_ = nxtNode;
+    delete posNode;
+    size_--;
+  }
+
   // Método para retornar el valor de una posición en la linked list
   node* get(int index) {
     if(index < 0 || index > size_) return nullptr;
@@ -218,4 +263,27 @@ int main() {
   cout << "The position of value 15:" << endl;
   int srch = ll.search(15);
   cout << srch << endl << endl;
+
+
+  // Remove first element
+  cout << "Remove the first element:" << endl;
+  ll.erase(0);
+  // 76->43->15->48->44->100->NULL
+  ll.print();
+  cout << endl;
+
+  // Remove fifth element
+  cout << "Remove the fifth element:" << endl;
+  ll.erase(4);
+  // 76->43->15->48->100->NULL
+  ll.print();
+  cout << endl;
+
+  // Remove tenth element
+  cout << "Remove the tenth element:" << endl;
+  ll.erase(9);
+  // Nothing happen
+  // 76->43->15->48->100->NULL
+  ll.print();
+  cout << endl;
 }
