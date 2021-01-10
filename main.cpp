@@ -23,7 +23,7 @@ struct node {
 class linked_list {
   node* head_;
   node* tail_;
-  int size_;
+  size_t size_;
 
 public:
   linked_list() : head_{nullptr}, tail_{nullptr}, size_{0} { }
@@ -32,7 +32,7 @@ public:
   void push_back(int data) {
     node* tmp = new node(data);
     /*****************************************************************
-    también podemos hacer esto, pero como nuestro constructor ya lo 
+    También podemos hacer esto, pero como nuestro constructor ya lo 
     hace, no hay necesidad de inicializar cada atributo como lo hace 
     el sig código:
 
@@ -56,8 +56,11 @@ public:
       tail_->next_ = tmp;
       tail_ = tail_->next_;
     }
+
+    size_ += 1;
   }
 
+  // Método para agregar un nodo al inicio de una linked list
   void push_front(int data) {
     node* tmp = new node(data);
     /*****************************************************************
@@ -77,6 +80,77 @@ public:
       tmp->next_ = head_;
       head_ = tmp;
     }
+
+    size_ += 1;
+  }
+
+  // Método para agregar un nodo en la posición que se especifique en la linked list
+  void insert(size_t index, int data) {
+    node* tmp = new node(data);
+    /*****************************************************************
+    Verificamos si el index es menor que 0 o si es mayor que el tamaño
+    de la linked list, si es así, entonces no retornamos nada.
+    Si el index es 0, significa que se hará una inserción al inicio de
+    la linked list, por eso un push_front().
+    Si el index es el mismo que el tamaño de la linked list, significa 
+    que se hará una inserción al final de la linked list, por eso un 
+    push_back().
+    Y si no es ninguna de las condiciones previstas anteriormente, 
+    entonces creamos dos nodos, que actúen como el nodo previo y 
+    posterior, a continuación explicaré la lógica que consideré.
+      1. Recorreremos la linked list hasta llegar una posición antes
+      de la posición deseada, esto tiene por ebjetivo que los 2 nodos, 
+      tanto el previo como el posterior avancen.
+      2. Al finalizar el loop el nodo previo debería ser el nodo que 
+      se encuentra una posición antes del nodo de la posición que se 
+      especificó y el nodo posterior debería ser el mismo nodo que el
+      nodo previo.
+      3. Sin embargo, una vez fuera del loop el nodo posterior será el 
+      le sigue, con esto, habremo conseguido las direcciones que 
+      necesitamos.
+      4. Finalizamos el algoritmo con nuestro nodo tmp(creado al inicio)
+      apuntando al nodo posterior y con el nodo previo apuntando al nodo
+      tmp.
+    ******************************************************************/
+    if(index < 0 || index > size_) 
+      return;
+    if(index == 0) {
+      push_front(data);
+      return;
+    }
+    if(index == size_) {
+      push_back(data);
+      return;
+    }
+
+    node* prevNode = head_;
+    node* posNode = head_;
+
+    for(size_t i = 0; i < index-1; i++) {
+      prevNode = prevNode->next_;
+      posNode = posNode->next_;
+    }
+    posNode = posNode->next_;
+
+    tmp->next_ = posNode;
+    prevNode->next_ = tmp;
+
+    size_ += 1;
+  }
+
+  // Método para retornar el valor de una posición en la linked list
+  node* get(int index) {
+    if(index < 0 || index > size_) return nullptr;
+
+    node* tmp = head_;
+    for(size_t i=0; i<index; ++i) {
+      tmp = tmp->next_;
+    }
+    return tmp;
+  }
+
+  size_t size() {
+    return size_;
   }
 
   void print() {
@@ -89,7 +163,6 @@ public:
 };
 
 int main() {
-  cout << "hello" << endl;
   linked_list ll;
 
   // 43->NULL
@@ -114,4 +187,16 @@ int main() {
   ll.insert(0, 22);
 
   ll.print();
+
+  cout << '\n' << ll.size() << '\n';
+
+  // Get value of the second index
+  // It should be 43
+  cout << "Get value of the second index:" << endl;
+  node* get = ll.get(2);
+  if(get != NULL)
+    cout << get->value_;
+  else
+    cout << "not found";
+  cout << endl << endl;
 }
