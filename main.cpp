@@ -28,6 +28,11 @@ class linked_list {
 public:
   linked_list() : head_{nullptr}, tail_{nullptr}, size_{0} { }
 
+  linked_list(initializer_list<int> l) : head_{nullptr}, tail_{nullptr}, size_{0} {
+    for(auto v:l) 
+      push_back(v);
+  }
+
   // Método para agregar un nodo al final de una linked list
   void push_back(int data) {
     node* tmp = new node(data);
@@ -57,7 +62,7 @@ public:
       tail_ = tail_->next_;
     }
 
-    size_ += 1;
+    size_++;
   }
 
   // Método para agregar un nodo al inicio de una linked list
@@ -81,7 +86,7 @@ public:
       head_ = tmp;
     }
 
-    size_ += 1;
+    size_++;
   }
 
   // Método para agregar un nodo en la posición que se especifique en la linked list
@@ -135,7 +140,7 @@ public:
     tmp->next_ = posNode;
     prevNode->next_ = tmp;
 
-    size_ += 1;
+    size_++;
   }
 
   void pop_front() {
@@ -144,6 +149,8 @@ public:
 
     head_ = newHead;
     delete curHead;
+
+    size_--;
   }
 
   void pop_back() {
@@ -156,6 +163,8 @@ public:
     node* node = newTail->next_;
     tail_ = newTail;
     delete node;
+
+    size_--;
   }
 
   void erase(int index) {
@@ -180,6 +189,7 @@ public:
 
     prevNode->next_ = nxtNode;
     delete posNode;
+    
     size_--;
   }
 
@@ -286,4 +296,14 @@ int main() {
   // 76->43->15->48->100->NULL
   ll.print();
   cout << endl;
+
+
+  // Test 1
+  linked_list ll2;
+  for (size_t i = 0; i < 10; ++i) {
+    ll2.push_back(i);
+  }
+  if(ll2.size() == 10) cout << "owo\n";
+
+  linked_list list1 = {3, 24, 13, 64, 25};
 }
