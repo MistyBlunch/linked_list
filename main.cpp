@@ -205,9 +205,13 @@ public:
       2. Al finalizar el loop el nodo previo debería ser el nodo que 
       se encuentra una posición antes del nodo de la posición que se 
       especificó.
-      3. Después creamos un nuevo nodo el cuál será el siguiente nodo del 
-      nodo previo.
-      4. 
+      3. Después creamos un nuevo nodo(posNode) el cuál será el 
+      siguiente nodo del nodo previo.
+      4. A su vez creamos otro nodo que sera el siguiente(nxtNode) del
+      nodo posterior.
+      5. Lo siguiente tendrá por objetivo hacer que el nodo previo 
+      apunte al nodo siguiente del posterior y después eliminará el nodo 
+      posterior creado.
     ******************************************************************/
     if(index < 0 || index > size_) return;
     if(size_ == 0) return;
