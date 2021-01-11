@@ -186,8 +186,31 @@ public:
 
   // Método para borrar el nodo de posición especificada en el método
   void erase(int index) {
-    if(size_ == 0) return;
+    /*****************************************************************
+    Verificamos si el index es menor que 0 o si es mayor que el tamaño
+    de la linked list, si es así, entonces no retornamos nada.
+    Si el size es igual a cero, significa que no hay ningún nodo el la 
+    linked list, por lo que, no se hará nada.
+    Sin embargo el index es 0, significa que se elminará al inicio de
+    la linked list, por eso un pop_front().
+    Si el index es el mismo que el tamaño de la linked list, significa 
+    que se eliminará el último nodo de  la linked list, por eso un 
+    pop_back().
+    Y si no es ninguna de las condiciones previstas anteriormente, 
+    entonces primero creamos un nodo, que actúen como el nodo previo,
+    a continuación explicaré la lógica que consideré.
+      1. Recorreremos la linked list hasta llegar una posición antes
+      de la posición deseada, esto tiene por ebjetivo que el nodo 
+      previo sea el nodo anterior al nodo que se quiere borrar.
+      2. Al finalizar el loop el nodo previo debería ser el nodo que 
+      se encuentra una posición antes del nodo de la posición que se 
+      especificó.
+      3. Después creamos un nuevo nodo el cuál será el siguiente nodo del 
+      nodo previo.
+      4. 
+    ******************************************************************/
     if(index < 0 || index > size_) return;
+    if(size_ == 0) return;
     if(index == 0) {
       pop_front();
       return;
