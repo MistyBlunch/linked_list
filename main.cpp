@@ -163,8 +163,8 @@ public:
   void pop_back() {
     /*****************************************************************
     Para este método crearemos 1 nodo, este será el head. Luego 
-    haremos que el head apunte al penúltimo nodo. Hecho esto, 
-    ya podemos eliminar el nodo que guardaba al antiguo head.
+    haremos que el nodo sea el penúltimo. Con esto ya podemos eliminar
+    el nodo siguiente y hacer que el tail apunte al penúltimo nodo.
     ******************************************************************/
     if(size_ == 0) return;
     if(size_ == 1) {
@@ -184,6 +184,7 @@ public:
     size_--;
   }
 
+  // Método para borrar el nodo de posición especificada en el método
   void erase(int index) {
     if(size_ == 0) return;
     if(index < 0 || index > size_) return;
@@ -232,18 +233,22 @@ public:
     return -1;
   }
 
+  // Método para retornar el tamaño de la linked list
   size_t size() {
     return size_;
   }
-
+  
+  // Método para retornar el puntero head de la linked list
   node* begin() {
     return head_;
   }
 
+  // Método para retornar el puntero tail de la linked list
   node* end() {
     return tail_;
   }
 
+  // Método para imprimir la linked list
   void print() {
     node* nod = head_;
     while(nod != nullptr) {
@@ -299,7 +304,6 @@ int main() {
   int srch = ll.search(15);
   cout << srch << endl << endl;
 
-
   // Remove first element
   cout << "Remove the first element:" << endl;
   ll.erase(0);
@@ -338,4 +342,12 @@ int main() {
 
   auto iter = end(list1)->value();
   auto itt = begin(list1);
+
+  for(auto it = list1.begin(); it != list1.end(); it+=2) {
+    result.push_back(it->value());
+  }
+  result.push_back(iter);
+
+  result.print();
+    cout << "\n size: \t" << result.size() << "\n";
 }
