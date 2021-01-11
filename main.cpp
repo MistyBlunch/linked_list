@@ -143,26 +143,43 @@ public:
     size_++;
   }
 
+  // Método para borrar el primer nodo de la linked list
   void pop_front() {
-    node* curHead = head_;
-    node* newHead = head_->next_;
+    /*****************************************************************
+    Para este método crearemos 1 nodo, este será el head. Luego 
+    haremos que el head apunte al nodo siguiente del head. Hecho esto, 
+    ya podemos eliminar el nodo que guardaba al antiguo head.
+    ******************************************************************/
+    if(size_ == 0) return;
+    node* node = head_;
 
-    head_ = newHead;
-    delete curHead;
+    head_ = node->next_;
+    delete node;
 
     size_--;
   }
 
+  // Método para borrar el último nodo de la linked list
   void pop_back() {
-    node* newTail = head_;
-
-    for(size_t i = 0; i < size_-1; ++i) {
-      newTail = newTail->next_;
+    /*****************************************************************
+    Para este método crearemos 1 nodo, este será el head. Luego 
+    haremos que el head apunte al penúltimo nodo. Hecho esto, 
+    ya podemos eliminar el nodo que guardaba al antiguo head.
+    ******************************************************************/
+    if(size_ == 0) return;
+    if(size_ == 1) {
+      pop_front();
+      return;
     }
 
-    node* node = newTail->next_;
-    tail_ = newTail;
-    delete node;
+    node* node = head_;
+
+    for(size_t i = 0; i < size_-1; ++i) {
+      node = node->next_;
+    }
+
+    delete node->next_;
+    tail_ = node;
 
     size_--;
   }
@@ -217,6 +234,14 @@ public:
 
   size_t size() {
     return size_;
+  }
+
+  node* begin() {
+    return head_;
+  }
+
+  node* end() {
+    return tail_;
   }
 
   void print() {
@@ -306,4 +331,11 @@ int main() {
   if(ll2.size() == 10) cout << "owo\n";
 
   linked_list list1 = {3, 24, 13, 64, 25};
+
+  linked_list result;
+  int number = 2;
+  int counter = 0;
+
+  auto iter = end(list1)->value();
+  auto itt = begin(list1);
 }
