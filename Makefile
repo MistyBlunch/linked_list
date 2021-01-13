@@ -3,13 +3,17 @@ CC=g++
 
 CFLAGS=-c -Wall
 
-all: linkedList
+all: 	linkedList
+			echo "Finish :D" 
 
 linkedList: main.o
 						$(CC) main.o -o linkedList
 
-main.o: main.cpp
+main.o: message.o
 				$(CC) $(CFLAGS) main.cpp
 
+message.o: 
+					echo "Testing Linked List uwu..." 
+
 clean: 
-				rm -rf *.o linkedList
+			rm -rf *.o linkedList
