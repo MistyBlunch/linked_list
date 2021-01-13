@@ -2,27 +2,29 @@
 using namespace std;
 
 // Creamos una estrucuta node que tendrá 2 atributos
+template <typename T>
 struct node {
-  int value_;
-  node* next_ = nullptr;
+  T value_;
+  node<T>* next_ = nullptr;
 
   /*****************************************************************
   Tendremos 2 constructores, uno que inicializará los atributos con 
   los argumentos que le pasemos a una instancia de node
   ******************************************************************/
   node() = default;
-  node(int value_) : value_{value_}, next_{nullptr} { }
+  node(T value_) : value_{value_}, next_{nullptr} { }
 
   // Creamos 2 métodos
-  int value() const { return value_; }
-  node* next() const { return next_; }
+  T value() const { return value_; }
+  node<T>* next() const { return next_; }
 };
 
 
 // Creamos una estrucuta linked list que tendrá 3 atributos
+template <typename T>
 class linked_list {
-  node* head_;
-  node* tail_;
+  node<T>* head_;
+  node<T>* tail_;
   size_t size_;
 
 public:
@@ -34,8 +36,8 @@ public:
   }
 
   // Método para agregar un nodo al final de una linked list
-  void push_back(int data) {
-    node* tmp = new node(data);
+  void push_back(T data) {
+    node<T>* tmp = new node<T>(data);
     /*****************************************************************
     También podemos hacer esto, pero como nuestro constructor ya lo 
     hace, no hay necesidad de inicializar cada atributo como lo hace 
@@ -66,8 +68,8 @@ public:
   }
 
   // Método para agregar un nodo al inicio de una linked list
-  void push_front(int data) {
-    node* tmp = new node(data);
+  void push_front(T data) {
+    node<T>* tmp = new node<T>(data);
     /*****************************************************************
     Verificamos si el head es nulo, si es así, entonces quiere decir 
     que aún no hay ningún nodo en la linked list, por lo que el nodo
@@ -90,8 +92,8 @@ public:
   }
 
   // Método para agregar un nodo en la posición que se especifique en la linked list
-  void insert(size_t index, int data) {
-    node* tmp = new node(data);
+  void insert(size_t index, T data) {
+    node<T>* tmp = new node<T>(data);
     /*****************************************************************
     Verificamos si el index es menor que 0 o si es mayor que el tamaño
     de la linked list, si es así, entonces no retornamos nada.
@@ -128,8 +130,8 @@ public:
       return;
     }
 
-    node* prevNode = head_;
-    node* posNode = head_;
+    node<T>* prevNode = head_;
+    node<T>* posNode = head_;
 
     for(size_t i = 0; i < index-1; i++) {
       prevNode = prevNode->next_;
@@ -151,7 +153,7 @@ public:
     ya podemos eliminar el nodo que guardaba al antiguo head.
     ******************************************************************/
     if(size_ == 0) return;
-    node* node = head_;
+    node<T>* node = head_;
 
     head_ = node->next_;
     delete node;
@@ -172,7 +174,7 @@ public:
       return;
     }
 
-    node* node = head_;
+    node<T>* node = head_;
 
     for(size_t i = 0; i < size_-1; ++i) {
       node = node->next_;
@@ -224,13 +226,13 @@ public:
       return;
     }
 
-    node* prevNode = head_;
+    node<T>* prevNode = head_;
 
     for(size_t i = 0; i < index-1; ++i) {
       prevNode = prevNode->next_;
     }
-    node* posNode = prevNode->next_;
-    node* nxtNode = posNode->next_;
+    node<T>* posNode = prevNode->next_;
+    node<T>* nxtNode = posNode->next_;
 
     prevNode->next_ = nxtNode;
     delete posNode;
@@ -239,10 +241,10 @@ public:
   }
 
   // Método para retornar el valor de una posición en la linked list
-  node* get(size_t index) {
+  node<T>* get(size_t index) {
     if(index < 0 || index > size_) return nullptr;
 
-    node* tmp = head_;
+    node<T>* tmp = head_;
     for(size_t i=0; i<index; ++i) {
       tmp = tmp->next_;
     }
@@ -250,8 +252,8 @@ public:
   }
 
   // Método para retornar el indice del valor que le pasamos al método
-  int search(int data) {
-    node* tmp = head_;
+  T search(T data) {
+    node<T>* tmp = head_;
     for(size_t i=0; i<size_; ++i) {
       if(tmp->value_ == data)
         return i;
@@ -266,18 +268,18 @@ public:
   }
   
   // Método para retornar el puntero head de la linked list
-  node* begin() {
+  node<T>* begin() {
     return head_;
   }
 
   // Método para retornar el puntero tail de la linked list
-  node* end() {
+  node<T>* end() {
     return tail_;
   }
 
   // Método para imprimir la linked list
   void print() {
-    node* nod = head_;
+    node<T>* nod = head_;
     while(nod != nullptr) {
       cout << nod->value_ << " -> ";
       nod = nod->next_;
@@ -286,7 +288,7 @@ public:
 };
 
 int main() {
-  linked_list ll;
+  linked_list<int> ll;
 
   // 43->NULL
   ll.push_front(43);
@@ -318,7 +320,7 @@ int main() {
   // Get value of the second index
   // It should be 43
   cout << "Get value of the second index:" << endl;
-  node* get = ll.get(2);
+  node<int>* get = ll.get(2);
   if(get != NULL)
     cout << get->value_;
   else
@@ -355,15 +357,15 @@ int main() {
 
 
   // Test 1
-  linked_list ll2;
+  linked_list<int> ll2;
   for (size_t i = 0; i < 10; ++i) {
     ll2.push_back(i);
   }
   if(ll2.size() == 10) cout << "owo\n";
 
-  linked_list list1 = {3, 24, 13, 64, 25};
+  linked_list<int> list1 = {3, 24, 13, 64, 25};
 
-  linked_list result;
+  linked_list<int> result;
 
   auto iter = end(list1)->value();
 
