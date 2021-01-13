@@ -373,5 +373,5 @@ int main() {
   result.push_back(iter);
 
   result.print();
-  cout << "\n size: \t" << result.size() << "\n";
+  cout << "\n size: \t" << result.size() << "\n"
 }
