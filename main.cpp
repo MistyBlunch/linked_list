@@ -185,7 +185,7 @@ public:
   }
 
   // Método para borrar el nodo de posición especificada en el método
-  void erase(int index) {
+  void erase(size_t index) {
     /*****************************************************************
     Verificamos si el index es menor que 0 o si es mayor que el tamaño
     de la linked list, si es así, entonces no retornamos nada.
@@ -239,7 +239,7 @@ public:
   }
 
   // Método para retornar el valor de una posición en la linked list
-  node* get(int index) {
+  node* get(size_t index) {
     if(index < 0 || index > size_) return nullptr;
 
     node* tmp = head_;
@@ -364,11 +364,8 @@ int main() {
   linked_list list1 = {3, 24, 13, 64, 25};
 
   linked_list result;
-  int number = 2;
-  int counter = 0;
 
   auto iter = end(list1)->value();
-  auto itt = begin(list1);
 
   for(auto it = list1.begin(); it != list1.end(); it+=2) {
     result.push_back(it->value());
@@ -376,5 +373,5 @@ int main() {
   result.push_back(iter);
 
   result.print();
-    cout << "\n size: \t" << result.size() << "\n"
+  cout << "\n size: \t" << result.size() << "\n";
 }
